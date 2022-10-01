@@ -27,6 +27,7 @@ NUEVO</button>
             <th>Nombre</th>
             <th>Distritos</th>
             <th>Poblacion</th>
+            <th>Acciones</th>
         </tr>
      </head>
     <tbody>
@@ -36,14 +37,75 @@ NUEVO</button>
 
             $sql="SELECT * FROM city";
             $datos=$cone->query($sql);
-               foreach ($datos as $pais)
+               foreach ($datos as $ciudad)
                 {
                   echo "<tr>";
-                  echo "<td>" . $pais['CountryCode'] . "</td>";
-                  echo "<td>" . $pais['Name'] . "</td>";
-                  echo "<td>" . $pais['District'] . "</td>";
-                  echo "<td>" . $pais['Population'] . "</td>";
-                  echo "</tr>"; 
+                  echo "<td>" . $ciudad['CountryCode'] . "</td>";
+                  echo "<td>" . $ciudad['Name'] . "</td>";
+                  echo "<td>" . $ciudad['District'] . "</td>";
+                  echo "<td>" . $ciudad['Population'] . "</td>";
+                  echo "<td>" . '<button type="button" class="btn btn-primary" 
+                  data-bs-toggle="modal" data-bs-target="#actualizarciudad' . $ciudad['ID']  . '">
+                  Editar
+                </button>'. "</td>";
+                   echo "</tr>"; 
+                   echo '
+                   <div class="modal fade" id="actualizarciudad' . $ciudad['ID']  .'" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                     <div class="modal-dialog">
+                       <div class="modal-content">
+                         <div class="modal-header">
+                           <h5 class="modal-title" id="exampleModalLabel">Editar ' . $ciudad['ID']  .'</h5>
+                           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                         </div>
+                         <div class="modal-body">
+
+                         <form method="POST" action="city_grabar.php">
+                         <div class="mb-3"> 
+                           <lablel for="exampleFormControlImput1" class="form-label">Codigo del Pais</label>
+                           <select name="codigopais" class="form-control">';
+                                 
+                                 $sql="SELECT * FROM country";
+                                 $datos=$cone->query($sql);
+                                   foreach ($datos as $pais)
+                                     {
+                                       if ($pais['Code']==)$ciudad['CountryCode'] )
+                                       {
+                                        echo "<option selected value='" . 
+                                       $pais['Code'] . "'>" . $pais['Name'] ."</option>";
+                                       }
+                                       else
+                                       {
+                                        echo "<option value='" . 
+                                       $pais['Code'] . "'>" . $pais['Name'] ."</option>";
+                                       }
+                                       
+                                     }
+                                 echo '
+                           </select>
+                         </div>
+                         <div class="mb-3"> 
+                           <lablel for="exampleFormControlImput1" class="form-label">Nombre</label>
+                           <input type="text" class="form-control" value="' . $ciudad['Name'] . '" name="nombre_ciudad" placeholder="Nombre Ciudad" required>
+                         </div>
+                         <div class="mb-3"> 
+                           <lablel for="exampleFormControlImput1" class="form-label">Distritos</label>
+                           <input type="text" class="form-control" name="nombre_distrito" placeholder="Nombre Distrito" required>
+                         </div>
+                         <div class="mb-3"> 
+                           <lablel for="exampleFormControlImput1" class="form-label">Poblacion</label>
+                           <input type="text" class="form-control" name="poblacion" placeholder="Población" required>
+                         </div>
+                 
+                        </form>
+
+                         </div>
+                         <div class="modal-footer">
+                           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                           <button type="button" class="btn btn-primary">Save changes</button>
+                         </div>
+                       </div>
+                     </div>
+                   </div>';
                 }
          ?>
     
