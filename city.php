@@ -35,7 +35,7 @@ NUEVO</button>
          <?php
             include "conexion.php";
 
-            $sql="SELECT * FROM city";
+            $sql="SELECT * FROM city LIMIT 30";
             $datos=$cone->query($sql);
                foreach ($datos as $ciudad)
                 {
@@ -47,7 +47,8 @@ NUEVO</button>
                   echo "<td>" . '<button type="button" class="btn btn-primary" 
                   data-bs-toggle="modal" data-bs-target="#actualizarciudad' . $ciudad['ID']  . '">
                   Editar
-                </button>'. "</td>";
+                </button><a 
+                href="city_eliminar.php?id=' . $ciudad['ID'] . '" class="btn btn-danger" >Eliminar</a>'. "</td>";
                    echo "</tr>"; 
                    echo '
                    <div class="modal fade" id="actualizarciudad' . $ciudad['ID']  .'" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -68,7 +69,7 @@ NUEVO</button>
                                  $datos=$cone->query($sql);
                                    foreach ($datos as $pais)
                                      {
-                                       if ($pais['Code']==)$ciudad['CountryCode'] )
+                                       if ($pais['Code']==$ciudad['CountryCode'] )
                                        {
                                         echo "<option selected value='" . 
                                        $pais['Code'] . "'>" . $pais['Name'] ."</option>";
